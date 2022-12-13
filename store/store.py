@@ -25,17 +25,22 @@ class Store:
         self.tail.prev = self.head
 
     def get(self, key: str) -> Any:
-        node = self.dic[key]
-        self._remove(node)
-        self._add(node)
-        return node.val
+        if key in self.dic:
+          node = self.dic[key]
+          self._remove(node)
+          self._add(node)
+          return node.val
+        
+        return None
 
     def set(self, key: str, value: Any) -> None:
         if key in self.dic:
             self._remove(self.dic[key])
+
         node = Node(key, value)
         self._add(node)
         self.dic[key] = node
+
         if len(self.dic) > self.capacity:
             node = self.head.next
             self._remove(node)
