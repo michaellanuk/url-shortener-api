@@ -53,10 +53,10 @@ $ docker run -d --name url-shortener-container -p 80:80 url-shortener-image
 
 ## Example usage
 
-* `/encode` - POST - encode a URL, returns an encoded, shortened URL
+* `/` - POST - encode a URL, returns an encoded, shortened URL
   * Example cURL request (can be imported into Postman or run from command line):
     ```
-    curl --location --request POST 'localhost:8000/encode' \
+    curl --location --request POST 'localhost:8000/' \
     --header 'Content-Type: application/json' \
     --data-raw '{
       "url": "https://www.google.com"
@@ -65,26 +65,13 @@ $ docker run -d --name url-shortener-container -p 80:80 url-shortener-image
   * Expected response body
     ```
     {
-      "long_url": "https://www.google.com",
-      "short_url": "http://short.est/wEFUol"
+      "long_url": "https://www.facebook.com",
+      "short_url": "http://localhost:8000/BQRvJs"
     }
     ```
-* `/decode` - POST - decode a shortened URL, returns original and shortened URL
-  * Example cURL request:
-    ```
-    curl --location --request POST 'localhost:8000/decode' \
-    --header 'Content-Type: application/json' \
-    --data-raw '{
-        "url": "http://short.est/wEFUol"
-    }'
-    ```
-  * Expected response body
-    ```
-    {
-      "long_url": "https://www.google.com",
-      "short_url": "http://short.est/wEFUol"
-    }
-    ```
+
+* `/:url` - GET - decode a shortened URL and redirect to original URL
+  * Example URL to request in browser: `localhost:8000/BQRvJs`
 
 ## Testing
 
