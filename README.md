@@ -1,8 +1,8 @@
-## URL Shortener API
+# URL Shortener API
 
 Built with FastAPI
 
-### Project structure
+## Project structure
 
 - `main.py`
   - Main entry point for app. Contains routes for `/encode` and `/decode` endpoints.
@@ -11,14 +11,17 @@ Built with FastAPI
 - `tests/`
   - API tests for both endpoints. See below for instructions on how to run tests.
 - `store/`
-  - Contains key-value, in-memory store for mapping encoded/shortened URLs to their original, long URLs. Could be replaced in production by NoSQL database e.g., DynamoDB, MongoDB, or act as caching layer in front of database.
+  - Contains key-value, in-memory store for mapping encoded/shortened URLs to their original, long URLs. Implemented
+  as a LRU-cache with a max capacity.
 - `helpers/`
   - Helper functions for handler methods e.g., validating data.
 - `handlers/`
   - Main logic and algorithm behind `/encode` and `/decode` endpoints.
 
 
-### Installation
+## Installing and running the application
+
+### With Python
 
 1. Create a virtual environment
 ```
@@ -31,17 +34,24 @@ $ source venv/bin/activate
 $ python -m pip install -r requirements.txt
 ```
 
-### Running the app
-
-Run the app with uvicorn:
+3. Run the app with uvicorn:
 ```
 $ uvicorn main:app
 ```
 Use the `--reload` flag to enable hot reloading
 
-App will run on http://127.0.0.1:8000
+### With Docker
+1. Build docker image
+```
+$ docker build docker build -t url-shortener-image .
+```
 
-### Example usage
+2. Run docker container
+```
+$ docker run -d --name url-shortener-container -p 80:80 url-shortener-image
+```
+
+## Example usage
 
 * `/encode` - POST - encode a URL, returns an encoded, shortened URL
   * Example cURL request (can be imported into Postman or run from command line):
@@ -76,7 +86,7 @@ App will run on http://127.0.0.1:8000
     }
     ```
 
-### Testing
+## Testing
 
 In the project root, run
 ```
