@@ -28,5 +28,5 @@ def encode_url(long_url: str, store: Store) -> str:
     if store.get(short_url) == long_url:
         return with_domain(short_url)
 
-    store.set(long_url, short_url)
+    store.set(short_url, long_url)
     return with_domain(short_url)
