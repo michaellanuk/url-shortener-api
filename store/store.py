@@ -2,6 +2,7 @@ from typing import Any
 
 MAX_CAPACITY = 512
 
+
 class Node:
     def __init__(self, k, v):
         self.key = k
@@ -9,11 +10,13 @@ class Node:
         self.prev = None
         self.next = None
 
+
 class Store:
     """
     Store implemented as a LRU cache using a doubly linked list
     """
-    def __init__(self, capacity: int=MAX_CAPACITY) -> None:
+
+    def __init__(self, capacity: int = MAX_CAPACITY) -> None:
         self.capacity = capacity
         self.dic = dict()
         self.head = Node(0, 0)
