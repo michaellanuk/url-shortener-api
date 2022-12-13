@@ -1,11 +1,10 @@
 from fastapi import HTTPException
 
 from store.store import Store
-from helpers.generic_helpers import without_domain
 
 
-def decode_url(url: str, store: Store) -> str:
-    long_url = store.get(without_domain(url))
+def decode_url(url: str, store: Store, domain: str) -> str:
+    long_url = store.get(url.replace(domain, ""))
     if long_url is None:
         raise HTTPException(status_code=404,
                             detail=f"No URL found for short URL: {url}")

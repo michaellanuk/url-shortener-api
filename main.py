@@ -1,6 +1,6 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.encoders import jsonable_encoder
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, RedirectResponse
 
 from schemas import URL
 from store.store import Store
@@ -17,15 +17,13 @@ def read_root():
     return {"message": "Hello from URL shortener API"}
 
 
-@app.post("/encode")
-def encode(url: URL):
+@app.post("/")
+def encode(url: URL, request: Request):
     json_compatible_item_data = jsonable_encoder(
-        {"long_url": url.url, "short_url": encode_url(url.url, store)})
+        {"long_url": url.url, "short_url": encode_url(url.url, store, str(request.url))})
     return JSONResponse(content=json_compatible_item_data)
 
 
-@app.post("/decode")
-def decode(url: URL):
-    json_compatible_item_data = jsonable_encoder(
-        {"long_url": decode_url(url.url, store), "short_url": url.url})
-    return JSONResponse(content=json_compatible_item_data)
+@app.get("/{url}", response_class=RedirectResponse)
+def decode(url: str, request: Request):
+    return decode_url(url, store, str(request.url))

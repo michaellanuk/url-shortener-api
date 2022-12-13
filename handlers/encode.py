@@ -4,7 +4,6 @@ from base64 import urlsafe_b64encode
 
 from store.store import Store
 from helpers.encode_helpers import exceeds_length, is_shortened_url
-from helpers.generic_helpers import with_domain
 
 MAX_SHORTENED_LENGTH = 6
 
@@ -14,7 +13,7 @@ def encode(url: str) -> str:
     return urlsafe_b64encode(sha256_digest).decode("utf8")[:MAX_SHORTENED_LENGTH]
 
 
-def encode_url(long_url: str, store: Store) -> str:
+def encode_url(long_url: str, store: Store, domain: str) -> str:
     if not long_url:
         raise HTTPException(status_code=422, detail="URL must be specified")
 
@@ -26,7 +25,7 @@ def encode_url(long_url: str, store: Store) -> str:
 
     short_url = encode(long_url)
     if store.get(short_url) == long_url:
-        return with_domain(short_url)
+        return f'{domain}{short_url}'
 
     store.set(short_url, long_url)
-    return with_domain(short_url)
+    return f'{domain}{short_url}'
