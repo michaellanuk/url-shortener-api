@@ -1,6 +1,6 @@
 # URL Shortener API
 
-Built with FastAPI
+Built with FastAPI, hosted on https://url-shortener-api.fly.dev/
 
 ## Project structure
 
