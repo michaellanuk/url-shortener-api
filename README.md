@@ -73,6 +73,8 @@ $ docker run -d --name url-shortener-container -p 80:80 url-shortener-image
 * `/:url` - GET - decode a shortened URL and redirect to original URL
   * Example URL to request in browser: `localhost:8000/BQRvJs`
 
+Visit `/docs` or `/redoc` to view interactive API docs
+
 ## Testing
 
 In the project root, run
